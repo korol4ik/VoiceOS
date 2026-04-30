@@ -1,0 +1,286 @@
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #0a0a0a;
+  color: #e0e0e0;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  cursor: none;
+}
+
+body.user-active {
+  cursor: default;
+}
+
+/* ── ШАПКА ── */
+
+#header {
+  padding: 28px 28px 10px;
+  border-bottom: 1px solid #1a1a1a;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+#header .logo {
+  color: #66bb6a;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+#header .sub {
+  color: #444;
+  font-size: 12px;
+}
+
+/* ── ВЫВОД ── */
+
+#output {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 28px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-size: 14px;
+  line-height: 1.65;
+  color: #b0b0b0;
+  scroll-behavior: smooth;
+}
+
+#output::-webkit-scrollbar {
+  width: 4px;
+}
+
+#output::-webkit-scrollbar-thumb {
+  background: #2a2a2a;
+  border-radius: 2px;
+}
+
+#output::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#output .user-query {
+  color: #fff;
+  font-weight: 600;
+}
+
+#output .system-response {
+  color: #90a4ae;
+  margin-bottom: 12px;
+}
+
+#output .error {
+  color: #ef5350;
+}
+
+#output .success {
+  color: #66bb6a;
+}
+
+#output .divider {
+  color: #222;
+  margin: 8px 0;
+  border-bottom: 1px solid #1a1a1a;
+  display: block;
+}
+
+/* ── КОНТЕЙНЕР ПРИЛОЖЕНИЙ ── */
+
+#app-container { display: flex; flex-direction: column; }
+
+#app-container.active { display: flex; flex-direction: column; }
+
+#app-container iframe {
+  width: 100%;
+  height: 100%;
+  min-height: 200px;
+  border: none;
+  background: transparent;
+}
+
+/* ── ПОЛЕ ВВОДА ── */
+
+#input-area {
+  display: flex;
+  align-items: center;
+  padding: 16px 28px 20px;
+  border-top: 1px solid #1a1a1a;
+  background: #0a0a0a;
+  flex-shrink: 0;
+}
+
+#prompt-symbol {
+  color: #555;
+  font-size: 16px;
+  margin-right: 10px;
+  user-select: none;
+}
+
+#query {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-family: inherit;
+  font-size: 15px;
+  caret-color: #fff;
+}
+
+#query::placeholder {
+  color: #333;
+}
+
+/* ── СТАТУС ── */
+
+#status {
+  font-size: 11px;
+  color: #555;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  padding-left: 12px;
+  user-select: none;
+}
+
+#status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #333;
+}
+
+#status-dot.loading {
+  background: #ffb74d;
+  animation: pulse 1s infinite;
+}
+
+#status-dot.ready {
+  background: #66bb6a;
+}
+
+#status-dot.error {
+  background: #ef5350;
+}
+
+/* ── АНИМАЦИЯ ── */
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50%      { opacity: 1; }
+}
+
+/* ── ГАЛЕРЕЯ ── */
+
+.gallery-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  border-bottom: 1px solid #1a1a1a;
+  background: #0d0d0d;
+}
+
+.gallery-close {
+  background: none;
+  border: 1px solid #333;
+  color: #999;
+  font-size: 14px;
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.gallery-close:hover {
+  background: #1a1a1a;
+  color: #fff;
+}
+
+.gallery-path {
+  color: #555;
+  font-size: 12px;
+  font-family: inherit;
+  overflow: auto;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.gallery-card {
+  background: #111;
+  border: 1px solid #1a1a1a;
+  border-radius: 6px;
+  overflow: auto;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.gallery-card:hover {
+  border-color: #333;
+}
+
+.gallery-card img,
+.gallery-card video {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery-card audio {
+  width: 100%;
+  height: 40px;
+  display: block;
+}
+
+.gallery-icon {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  color: #555;
+}
+
+.gallery-label {
+  padding: 6px 8px;
+  font-size: 11px;
+  color: #777;
+  overflow: auto;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gallery-loading,
+.gallery-empty,
+.gallery-error {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 40px;
+  color: #555;
+  font-size: 13px;
+}
+
+.gallery-error {
+  color: #ef5350;
+}
+.gallery-size { color: #444; font-size: 10px; margin-left: 4px; }
