@@ -1,72 +1,61 @@
-# Voice OS (Neuro-OS)
+# Neuro-OS
 
-**Компьютер, который понимает, что вам нужно.**
+**An operating system where the interface is conversation.**
 
-Voice OS — операционная система без меню и иконок. Единственный интерфейс — диалог. Пользователь описывает задачу на естественном языке — система исполняет.
+The user says what they need — the agent executes. Windows, buttons, files — everything is created on demand and disappears when not needed.
 
-## Зависимости
+## Quick Start
 
-- **OpenClaw** (≥ 2026.4) — ИИ-ядро. Без него всё остальное — просто статика.
-- **nginx** — веб-сервер (порт 80/443)
-- **ChromaDB** (Python) — семантическая память
-- **Python 3** — для вспомогательных сервисов
+1. Install [OpenClaw](https://openclaw.ai) or any other AI agent.
+2. Clone the repo: `git clone https://github.com/korol4ik/VoiceOS`
+3. Point your agent to `VoiceOS/bootstrap.md`.
+4. Go through the setup dialog with the agent — your desktop is ready.
 
-## Что в репозитории
+Alternatively, point the agent directly to this repo — it will read `bootstrap.md` and start the dialog.
 
-### Ядро системы — `neuro-os/core/`
-
-Файлы, которые определяют поведение Neuro-OS. Это самое главное:
-
-| Файл | Назначение |
-|------|-----------|
-| **AGENTS.md** | Полный workflow, архитектура памяти, правила работы, ключевые слова |
-| **IDENTITY.md** | Имя, роль, возможности |
-| **SOUL.md** | Ценности, hard limits, принципы |
-
-Эти файлы живут в `~/.neuro-os/` на сервере. Именно они создают систему.
-
-### Веб-интерфейс — `neuro-os/`
+## Structure
 
 ```
-index.html     — единственная веб-страница (чёрный терминал + поле ввода)
-js/app.js      — showApp, hash-триггеры, связь с OpenClaw API
-css/style.css  — минимальные стили
+VoiceOS/
+├── bootstrap.md                ← first-run instructions (agent reads)
+├── README.md
+└── neuro-os/
+    ├── core/                   ← agent personality (copied to workspace)
+    │   ├── AGENTS.md
+    │   ├── IDENTITY.md
+    │   └── SOUL.md
+    ├── index.html              ← desktop (entry point)
+    ├── css/index.css           ← styles
+    ├── js/
+    │   ├── config.js           ← constants
+    │   ├── drag.js             ← drag & resize
+    │   ├── wm.js               ← window manager
+    │   ├── channel.js          ← command channel (WS)
+    │   ├── ui.js               ← chat + REST API
+    │   ├── ws.js               ← WebSocket
+    │   └── app.js              ← initialization
+    ├── apps/                   ← user's web applications
+    │   ├── css/
+    │   └── js/
+    └── user/                   ← user's home folder
+        ├── documents/
+        ├── image/
+        ├── video/
+        └── audio/
 ```
 
-### Память
+## Principles
 
-- **ChromaDB** — векторная БД (all-MiniLM-L6-v2) для семантического поиска по истории
-- **requests.log** — хронология всех запросов (аудит)
+- **Pure HTML+CSS+JS** — no frameworks, no A2UI.
+- **Agent-neutral** — bootstrap is written in natural language, works with any AI agent.
+- **Privacy** — everything runs locally, data never leaves the server.
+- **Minimalism** — result immediately, no extra steps.
 
-## Как это работает
+## Dependencies
 
-```
-Пользователь (браузер) → index.html
-  → /api/v1/chat/completions → OpenClaw Gateway → LLM (DeepSeek)
-  → ChromaDB (семантический поиск контекста)
-  → bash / создание HTML
-  → сохранение в векторную память + лог
-```
+- AI agent (OpenClaw, Hermes, or any other)
+- Web server (nginx, OpenClaw embedded, Caddy — user's choice)
+- ChromaDB (optional, for vector memory)
 
-## Ключевое слово ЗАПОМНИ
-
-
-## Статус
-
-Рабочий прототип на сервере `korol4ik.org` (nginx + OpenClaw + ChromaDB + gallery + showApp).
-
-### Roadmap
-- [x] Веб-интерфейс + API через nginx
-- [x] Семантическая память (ChromaDB)
-- [x] Приложения на лету (showApp)
-- [x] Индекс команд + ЗАПОМНИ
-- [ ] Локальная LLM (вместо внешней)
-- [ ] MCP-безопасность
-- [ ] Генерация UI под любую задачу
-
-## Философия
-
-Интерфейс — это диалог. Программы создаются по необходимости. Интерфейс исчезает после выполнения задачи. Всё локально — приватность по умолчанию.
-
-## Лицензия
+## License
 MIT
