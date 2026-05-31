@@ -63,6 +63,29 @@ function log(role, txt) {
 
 function think() { log('thinking', 'thinking...'); }
 
+// ── Parse commands from agent response ──
+// Agent can include ```neuro-cmd ... ``` blocks in their response.
+// These blocks contain JSON commands that get executed via wm/channel.
+function parseCommands(reply) {
+  const regex = /```neuro-cmd\s*([\s\S]*?)```/g;
+  let match;
+  while ((match = regex.exec(reply)) !== null) {
+    try {
+      const cmd = JSON.parse(match[1].trim());
+      console.log('Neuro-CMD:', cmd);
+      if (typeof channel !== 'undefined' && channel.handleCommand) {
+        channel.handleCommand(cmd);
+      }
+    } catch(e) {
+      console.error('Neuro-CMD parse error:', e);
+    }
+  }
+}
+
+function stripCommands(reply) {
+  return reply.replace(/```neuro-cmd\s*[\s\S]*?```/g, '').trim();
+}
+
 // ── Send message to API ──
 function send(text) {
   log('user', text);
@@ -80,7 +103,11 @@ function send(text) {
     const reply = d?.choices?.[0]?.message?.content || '';
     if (reply && reply !== lastReply) {
       lastReply = reply;
-      log('agent', reply);
+      // Execute any embedded commands
+      parseCommands(reply);
+      // Strip commands from display text
+      const display = stripCommands(reply);
+      if (display) log('agent', display);
     }
   })
   .catch(e => {
