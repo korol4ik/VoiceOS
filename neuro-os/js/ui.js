@@ -107,7 +107,13 @@ function send(text) {
       parseCommands(reply);
       // Strip commands from display text
       const display = stripCommands(reply);
-      if (display) log('agent', display);
+      if (display) {
+        log('agent', display);
+      } else {
+        // Remove thinking if only commands, no text reply
+        const last = chat.lastElementChild;
+        if (last && last.classList.contains('chat-thinking')) last.remove();
+      }
     }
   })
   .catch(e => {
