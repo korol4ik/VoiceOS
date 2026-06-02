@@ -1,6 +1,6 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { background: #0a0a0a; color: #ccc; font-family: 'JetBrains Mono', monospace; overflow: hidden; height: 100vh; display: flex; flex-direction: column; }
-#desktop { flex: 1; position: relative; overflow: hidden; }
+#desktop { flex: 1; position: relative; min-height: 300px; }
 #chat-log { flex: 0 0 180px; overflow-y: auto; padding: 8px 16px; border-top: 1px solid #1a1a1a; background: #0d0d0d; display: flex; flex-direction: column; gap: 4px; font-size: 13px; }
 .chat-row { display: flex; gap: 8px; line-height: 1.5; }
 .chat-label { color: #555; flex-shrink: 0; user-select: none; }
@@ -9,19 +9,18 @@ body { background: #0a0a0a; color: #ccc; font-family: 'JetBrains Mono', monospac
 .chat-error .chat-content { color: #f66; }
 .chat-thinking { opacity: 0.5; }
 .window {
-  position: absolute; min-width: 280px; max-height: 90vh;
+  position: absolute; min-width: 280px;
   background: #1a1a1a; border: 1px solid #2a2a2a;
   border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.6);
   display: flex; flex-direction: column;
+  resize: both; overflow: auto;
 }
 .window-header { display: flex; justify-content: space-between; align-items: center; background: #222; padding: 6px 10px; border-bottom: 1px solid #333; cursor: move; user-select: none; font-size: 13px; }
 .window-title { color: #999; }
 .window-close { background: none; border: none; color: #666; font-size: 16px; cursor: pointer; }
 .window-close:hover { color: #f55; }
-.window-resize { position: absolute; bottom: 0; right: 0; width: 20px; height: 20px; cursor: nwse-resize; z-index: 100; }
-.window-resize::after { content: ''; position: absolute; bottom: 2px; right: 2px; width: 12px; height: 12px; border-right: 2px solid #888; border-bottom: 2px solid #888; opacity: 0.6; }
-.window-resize:hover::after { border-color: #fff; opacity: 1; }
-.window-body { flex: 1; padding: 12px; display: flex; flex-direction: column; gap: 8px; overflow-y: auto; overflow-x: hidden; min-height: 0; max-height: calc(90vh - 40px); }
+.window-resize { display: none; }
+.window-body { flex: 1; padding: 12px; display: flex; flex-direction: column; gap: 8px; overflow-y: auto; overflow-x: hidden; min-height: 0; }
 #input-panel { display: flex; align-items: center; padding: 12px 16px; border-top: 1px solid #1a1a1a; background: #0a0a0a; }
 #prompt-symbol { color: #555; margin-right: 8px; }
 #user-input { flex: 1; background: transparent; border: none; outline: none; color: #fff; font-family: inherit; font-size: 14px; caret-color: #fff; }

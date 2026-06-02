@@ -29,7 +29,6 @@ const wm = (function() {
         </div>
       </div>
       <div class="window-body"></div>
-      <div class="window-resize"></div>
     `;
 
     // Events
@@ -41,9 +40,7 @@ const wm = (function() {
     const header = el.querySelector('.window-header');
     drag(el, header);
 
-    // Resize
-    const rHandle = el.querySelector('.window-resize');
-    resize(el, rHandle);
+    // Resize (native CSS resize on .window)
 
     // Append
     desktop.appendChild(el);
@@ -192,10 +189,12 @@ const wm = (function() {
   function saveState() {
     const state = windows.map(win => {
       const rect = win.el.getBoundingClientRect();
+      const body = win.el.querySelector('.window-body');
       return {
         id: win.id, appId: win.appId, title: win.title,
         x: rect.left, y: rect.top, w: rect.width, h: rect.height,
-        fullscreen: win.fullscreen
+        fullscreen: win.fullscreen,
+        html: body ? body.innerHTML : ''
       };
     });
     localStorage.setItem('neuro_windows', JSON.stringify(state));
@@ -208,9 +207,11 @@ const wm = (function() {
     try {
       const wins = JSON.parse(raw);
       for (const s of wins) {
+        if (!s.html) continue;
         open(s.appId, {
           id: s.id, title: s.title,
-          x: s.x, y: s.y, w: s.w, h: s.h
+          x: s.x, y: s.y, w: s.w, h: s.h,
+          html: s.html
         });
       }
     } catch(e) {}
