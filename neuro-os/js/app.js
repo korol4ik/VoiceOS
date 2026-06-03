@@ -8,8 +8,23 @@ input.addEventListener('keydown', e => {
   }
 });
 
-// Clear chat
-document.getElementById('clear-chat').onclick = () => { chat.innerHTML = ''; };
+// Toggle chat
+let chatVisible = true;
+document.getElementById('toggle-chat').onclick = () => {
+  chatVisible = !chatVisible;
+  const log = document.getElementById('chat-log');
+  const panel = document.getElementById('input-panel');
+  const btn = document.getElementById('toggle-chat');
+  if (chatVisible) {
+    log.style.display = 'flex';
+    panel.style.display = 'flex';
+    btn.textContent = '💬';
+  } else {
+    log.style.display = 'none';
+    panel.style.display = 'none';
+    btn.textContent = '💬';
+  }
+};
 
 // Init window manager
 wm.init();
