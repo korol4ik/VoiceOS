@@ -10,15 +10,16 @@ input.addEventListener('keydown', e => {
 
 // Toggle chat log
 let chatVisible = true;
-document.getElementById('toggle-chat').onclick = () => {
-  chatVisible = !chatVisible;
-  const log = document.getElementById('chat-log');
-  if (chatVisible) {
-    log.style.display = 'flex';
-  } else {
-    log.style.display = 'none';
-  }
-};
+const toggleBtn = document.getElementById('toggle-chat') || document.getElementById('clear-chat');
+if (toggleBtn) {
+  toggleBtn.textContent = '💬';
+  toggleBtn.id = 'toggle-chat';
+  toggleBtn.onclick = () => {
+    chatVisible = !chatVisible;
+    const log = document.getElementById('chat-log');
+    log.style.display = chatVisible ? 'flex' : 'none';
+  };
+}
 
 // Init window manager
 wm.init();
