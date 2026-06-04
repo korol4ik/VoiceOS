@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="apps/css/fm.css">
+</head>
+<body>
+<div id="fm-path-bar">
+  <span id="fm-path-display">/</span>
+  <button id="fm-refresh" title="Refresh">↻</button>
+</div>
+<div id="fm-list"></div>
+<script src="apps/js/fm.js"></script>
+<script>
+// Auto-init after script loads — no dependency on parent wm
+(function() {
+  if (typeof init === 'function') {
+    init(null, {});
+  }
+})();
+</script>
+</body>
+</html>

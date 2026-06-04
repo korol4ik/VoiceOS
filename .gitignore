@@ -1,0 +1,5 @@
+node_modules/
+.git-credentials
+user/.git-credentials
+*.log
+.DS_Store

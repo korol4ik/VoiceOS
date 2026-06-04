@@ -1,0 +1,55 @@
+/* ── File Manager ── */
+#fm-path-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background: #252542;
+  border-bottom: 1px solid #333;
+}
+#fm-path-display {
+  flex: 1;
+  color: #8af;
+  font-size: 13px;
+  font-family: monospace;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#fm-refresh {
+  background: #3a3a5c;
+  border: none;
+  color: #ccc;
+  font-size: 16px;
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+#fm-refresh:hover { background: #4a4a7c; }
+
+#fm-list {
+  flex: 1;
+  min-height: 0;
+  padding: 4px 0;
+  overflow-y: auto;
+}
+.fm-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 13px;
+  font-family: monospace;
+  color: #ccc;
+  border-bottom: 1px solid #1e1e2e;
+  white-space: nowrap;
+}
+.fm-item:hover { background: #2a2a4a; }
+.fm-item .icon { width: 20px; text-align: center; }
+.fm-item .name { flex: 1; overflow: hidden; text-overflow: ellipsis; }
+.fm-item .size { color: #666; font-size: 11px; margin-left: 12px; }
+.fm-dir .name { color: #7bf; }
+.fm-file .name { color: #ccc; }
+.fm-up { color: #fa7; }
